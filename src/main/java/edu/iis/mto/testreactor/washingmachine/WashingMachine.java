@@ -5,8 +5,8 @@ import static java.util.Objects.requireNonNull;
 public class WashingMachine {
 
     public static final Percentage AVERAGE_DEGREE = new Percentage(50.0d);
-    public static final double MAX_WEIGTH_KG = 8;
-    private static final double HALF_MAX_WEIGTH = MAX_WEIGTH_KG / 2;
+    public static final double MAX_WEIGHT_KG = 8;
+    private static final double HALF_MAX_WEIGHT = MAX_WEIGHT_KG / 2;
     private final DirtDetector dirtDetector;
     private final Engine engine;
     private final WaterPump waterPump;
@@ -38,9 +38,9 @@ public class WashingMachine {
 
     private boolean overweight(LaundryBatch laundryBatch) {
         if (laundryBatch.getMaterialType() == Material.WOOL || laundryBatch.getMaterialType() == Material.JEANS) {
-            return laundryBatch.getWeightKg() >= HALF_MAX_WEIGTH;
+            return laundryBatch.getWeightKg() >= HALF_MAX_WEIGHT;
         }
-        return laundryBatch.getWeightKg() > MAX_WEIGTH_KG;
+        return laundryBatch.getWeightKg() > MAX_WEIGHT_KG;
     }
 
     private LaundryStatus error(ErrorCode code, Program program) {
