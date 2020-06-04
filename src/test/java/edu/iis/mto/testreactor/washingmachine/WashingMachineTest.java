@@ -7,6 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.Mockito.doThrow;
+
 @ExtendWith(MockitoExtension.class)
 class WashingMachineTest {
 
@@ -64,4 +67,17 @@ class WashingMachineTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    void waterPumpExceptionThrownShouldResultInFailure() throws WaterPumpException {
+        doThrow(WaterPumpException.class).when(waterPump).pour(anyDouble());
+
+        LaundryStatus actual = washingMachine.start(properLaundryBatch, unrelevantProgramConfiguration);
+        LaundryStatus expected = LaundryStatus.builder()
+                                              .withRunnedProgram(Program.SHORT)
+                                              .withResult(Result.FAILURE)
+                                              .withErrorCode(ErrorCode.WATER_PUMP_FAILURE)
+                                              .build();
+
+        Assertions.assertEquals(expected, actual);
+    }
 }
